@@ -24,21 +24,21 @@ struct ContentView: View {
     ContentView()
 }
 
-struct CardView: View {
-    var isFaceUp: Bool = false
+struct CardView: View { // obs: View are immutable
+    @State var isFaceUp = false // @state - create a pointer
     
     var body: some View {
-        ZStack(content: {
+        ZStack {
+            let base = RoundedRectangle(cornerRadius: 12)
             if isFaceUp {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 2)
+                base.foregroundColor(.white)
+                base.strokeBorder(lineWidth: 2)
                 Text("👻").font(.largeTitle)
             } else {
-                RoundedRectangle(cornerRadius: 12)
+                base.fill()
             }
-                
-        })
+        }.onTapGesture {
+            isFaceUp.toggle()
+        }
     }
 }
